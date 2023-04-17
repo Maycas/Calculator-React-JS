@@ -1,0 +1,10 @@
+@font-face {
+    font-family: digital7;
+    src: url('./assets/fonts/digital-7-font/Digital7-rg1mL.ttf')
+}
+
+:root {
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+    text-align: center;
+}
