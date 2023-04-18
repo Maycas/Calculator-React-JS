@@ -1,0 +1,52 @@
+.main {
+    font-size: 1.85em;
+    padding: 0.5em;
+    border-radius: 10px;
+    border: 2px solid gray;
+}
+
+.main:active {
+    box-shadow: 1px 1px 15px 0px #171717;
+}
+
+.number {
+    background:#6b7074;
+    color:#e8eaed;
+}
+
+.number:hover{
+    background: #424548;
+    border-color: #424548;
+}
+
+.operator {
+    background: #a0a0a0;
+    color: #e8eaed;
+}
+
+.operator:hover {
+    background: #7b7b7b;
+    border-color: #70757a;
+}
+
+.action {
+    background:#fba300;
+    color:#e8eaed;
+}
+
+.action:hover {
+    background: #ff8c00;
+    color:#e8eaed;
+}
+
+.equal {
+    grid-column-start: -1;
+    grid-column-end: -3;
+    background: #6597d0;
+    color: #000
+}
+
+.equal:hover {
+    background: #3578c4;
+    color: #000;
+}

@@ -8,3 +8,8 @@
     box-sizing: border-box;
     text-align: center;
 }
+
+h1 {
+    font-size: 3em;
+    padding: 0 1em;
+}

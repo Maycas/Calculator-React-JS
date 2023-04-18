@@ -1,0 +1,9 @@
+.display {
+    font-size: 3.5rem;
+    text-align: right;
+    font-family: digital7;
+    border-radius: 5px;
+    padding: 10px 30px;
+    width: 95%;
+    box-sizing: border-box;
+}
