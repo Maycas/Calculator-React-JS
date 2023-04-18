@@ -2,19 +2,19 @@ import Key from './Key/Key'
 
 import styles from './Keypad.module.css'
 
-const Keypad = () => {
+const Keypad = ({onClick}) => {
 
     let buttons = [
         {
-            value: 7,
+            value: '7',
             type: 'number'
         },
         {
-            value: 8,
+            value: '8',
             type: 'number'
         },
         {
-            value: 9,
+            value: '9',
             type: 'number'
         },
         {
@@ -26,15 +26,15 @@ const Keypad = () => {
             type: 'operator'
         },
         {
-            value: 4,
+            value: '4',
             type: 'number'
         },
         {
-            value: 5,
+            value: '5',
             type: 'number'
         },
         {
-            value: 6,
+            value: '6',
             type: 'number'
         },
         {
@@ -46,15 +46,15 @@ const Keypad = () => {
             type: 'operator'
         },
         {
-            value: 1,
+            value: '1',
             type: 'number'
         },
         {
-            value: 2,
+            value: '2',
             type: 'number'
         },
         {
-            value: 3,
+            value: '3',
             type: 'number'
         },
         {
@@ -66,7 +66,7 @@ const Keypad = () => {
             type: 'action'
         },
         {
-            value: 0,
+            value: '0',
             type: 'number'
         },
         {
@@ -84,13 +84,14 @@ const Keypad = () => {
     ]
 
     return ( 
-        <div className={styles.keypad}>
+        <div className={styles.root}>
             { 
                 buttons.map( 
                     (button, index) =>   <Key 
                                             key={index}
                                             value={button.value} 
-                                            type={button.type}>
+                                            type={button.type}
+                                            onClick={onClick}>
                                         </Key>
                 ) 
             }

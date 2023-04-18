@@ -1,4 +1,4 @@
-.keypad {
+.root {
     display: grid;
     grid-template-columns: repeat(5, 25fr);
     margin: 2.5rem 0 0 0;
