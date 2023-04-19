@@ -15,6 +15,8 @@ function Calculator() {
     const isValidNumberKey = (value) => ('1234567890.'.split('').includes(value) || ['00'].includes(value))
 
     const isValidOperator = (value) => ('+-*/'.split('').includes(value))
+
+    const isInt = (number) => number % 1 === 0
     
     const addKeyValue = (value) => {
         if(enabled) {
@@ -40,7 +42,12 @@ function Calculator() {
             if(result === Infinity) {
                 setEnabled(false)
             }
-            
+
+            // Fix number of decimals if result is a float
+            if(!isInt(result)) {
+                result = result.toFixed(5)
+            }
+
             result = String(Number(result)) // remove trailing zeroes and casting back to String
         } catch(error) {
             // Disable calculator if Error
@@ -64,13 +71,11 @@ function Calculator() {
         if(enabled && keyValue !== 'CE') {
             if(isValidNumberKey(keyValue) || isValidOperator(keyValue)) {
                 addKeyValue(keyValue)
-            } else if(keyValue == 'DEL') {
+            } else if(keyValue == 'DEL' || keyValue == 'Backspace') {
                 removeLastDisplayCharacter()           
-            } else if(keyValue == '=') {
+            } else if(keyValue == '=' || keyValue == 'Enter') {
                 resolve()
-            } else {
-                console.error('Not a valid parameter')
-            }
+            } 
         } else if(keyValue === 'CE') {
             // CE will reset the calculator if 
             setDisplayValue('0')
@@ -80,7 +85,7 @@ function Calculator() {
 
     return(
         <section className={styles.root}>
-            <Display value={displayValue} onChange={setDisplayValue}></Display>
+            <Display value={displayValue} onChange={handleClickOnKey}></Display>
             <Keypad onClick={handleClickOnKey}></Keypad>
         </section>
     )
