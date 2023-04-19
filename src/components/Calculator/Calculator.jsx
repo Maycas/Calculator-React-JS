@@ -10,40 +10,50 @@ import styles from './Calculator.module.css'
 function Calculator() {
 
     const [displayValue, setDisplayValue] = useState('0');
+    const [enabled, setEnabled] = useState(true)
 
     const isValidNumberKey = (value) => ('1234567890.'.split('').includes(value) || ['00'].includes(value))
 
     const isValidOperator = (value) => ('+-*/'.split('').includes(value))
     
     const addKeyValue = (value) => {
-        let result
-        // Remove the zero at the beginning of the display when typing a number
-        if(displayValue === '0' && value !=='.' && !isValidOperator(value)) { 
-            result = ''
-        }else {
-            result = displayValue
-        }
-        result += value
-        setDisplayValue(result)
+        if(enabled) {
+            let result
+            // Remove the zero at the beginning of the display when typing a number
+            if(displayValue === '0' && value !=='.' && !isValidOperator(value)) { 
+                result = ''
+            }else {
+                result = displayValue
+            }
+            result += value
+            setDisplayValue(result)
+        }  
     }
 
-    const isInt =(n) => {
-        return n % 1 === 0;
-     }
+    const isInt =(n) => n % 1 === 0
 
     const resolve = () => {
-        let result = evaluate(displayValue)
-        // If integer, remove decimal zeroes
-        if(isInt(result)) {
-            result = '' + result
-        } else {
-            result = '' + result.toFixed(4)
-        }
-        result = String(Number(result)) // remove trailing zeroes and casting back to String
+        let result
+
+        try{
+            result = evaluate(displayValue)
+            // If integer, remove decimal zeroes
+            if(isInt(result)) {
+                result = '' + result
+            } else if(result === Infinity){
+                setEnabled(false)
+            } else {
+                result = '' + result.toFixed(4)
+            }
+            result = String(Number(result)) // remove trailing zeroes and casting back to String
+        } catch(error) {
+            result = 'ERROR'
+            setEnabled(false)
+        }   
         setDisplayValue(result)
     }
 
-    const clearDisplay = () => {
+    const removeLastDisplayCharacter = () => {
         let result = displayValue.substring(0, displayValue.length - 1)
         if(result === '') {
             setDisplayValue('0')
@@ -53,17 +63,21 @@ function Calculator() {
     }
 
     const handleClickOnKey = (keyValue) => {
-        if(isValidNumberKey(keyValue) || isValidOperator(keyValue)) {
-            addKeyValue(keyValue)
-        } else if(keyValue == 'CE') {
+        if(enabled && keyValue !== 'CE') {
+            if(isValidNumberKey(keyValue) || isValidOperator(keyValue)) {
+                addKeyValue(keyValue)
+            } else if(keyValue == 'DEL') {
+                removeLastDisplayCharacter()           
+            } else if(keyValue == '=') {
+                resolve()
+            } else {
+                console.error('Not a valid parameter')
+            }
+        } else if(keyValue === 'CE') {
+            // CE will reset the calculator if 
             setDisplayValue('0')
-        } else if(keyValue == 'DEL') {
-            clearDisplay()
-        } else if(keyValue == '=') {
-            resolve()
-        } else {
-            console.error('Not a valid parameter')
-        }        
+            setEnabled(true) 
+        }
     }
 
     return(
