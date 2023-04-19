@@ -11,26 +11,19 @@ function Calculator() {
 
     const [displayValue, setDisplayValue] = useState('0');
 
-    const isValidNumberKey = (value) => ('1234567890'.split('').includes(value) || ['.', '00'].includes(value))
+    const isValidNumberKey = (value) => ('1234567890.'.split('').includes(value) || ['00'].includes(value))
 
     const isValidOperator = (value) => ('+-*/'.split('').includes(value))
-
-    const cleanLeadingAndTrailingZeroes = (value) => {
-        const operands = value.match(/[-+*/]|[0-9.]+/g)
-        
-        return operands.reduce((accumulator, operand) => {
-            if(!isNaN(Number(operand))) {
-                // Clean leading and trailing zeroes if the operand is a number
-                operand = String(Number(operand))
-            }
-            accumulator += operand
-            return accumulator
-        }, '') 
-    }
     
     const addKeyValue = (value) => {
-        let result = displayValue + value
-        result = cleanLeadingAndTrailingZeroes(result)
+        let result
+        // Remove the zero at the beginning of the display when typing a number
+        if(displayValue === '0' && value !=='.' && !isValidOperator(value)) { 
+            result = ''
+        }else {
+            result = displayValue
+        }
+        result += value
         setDisplayValue(result)
     }
 
@@ -46,6 +39,7 @@ function Calculator() {
         } else {
             result = '' + result.toFixed(4)
         }
+        result = String(Number(result)) // remove trailing zeroes and casting back to String
         setDisplayValue(result)
     }
 
@@ -74,7 +68,7 @@ function Calculator() {
 
     return(
         <section className={styles.root}>
-            <Display value={displayValue}></Display>
+            <Display value={displayValue} onChange={setDisplayValue}></Display>
             <Keypad onClick={handleClickOnKey}></Keypad>
         </section>
     )
