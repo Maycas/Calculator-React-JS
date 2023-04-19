@@ -12,6 +12,8 @@ function Calculator() {
     const [displayValue, setDisplayValue] = useState('0');
     const [enabled, setEnabled] = useState(true)
 
+    const calculatorDecimalResolution = 4
+
     const isValidNumberKey = (value) => ('1234567890.'.split('').includes(value) || ['00'].includes(value))
 
     const isValidOperator = (value) => ('+-*/'.split('').includes(value))
@@ -45,7 +47,7 @@ function Calculator() {
 
             // Fix number of decimals if result is a float
             if(!isInt(result)) {
-                result = result.toFixed(5)
+                result = result.toFixed(calculatorDecimalResolution)
             }
 
             result = String(Number(result)) // remove trailing zeroes and casting back to String
