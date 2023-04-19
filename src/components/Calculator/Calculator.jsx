@@ -30,26 +30,24 @@ function Calculator() {
         }  
     }
 
-    const isInt =(n) => n % 1 === 0
-
     const resolve = () => {
         let result
 
         try{
             result = evaluate(displayValue)
-            // If integer, remove decimal zeroes
-            if(isInt(result)) {
-                result = '' + result
-            } else if(result === Infinity){
+
+            // Disable calculator if Infinity
+            if(result === Infinity) {
                 setEnabled(false)
-            } else {
-                result = '' + result.toFixed(4)
             }
+            
             result = String(Number(result)) // remove trailing zeroes and casting back to String
         } catch(error) {
+            // Disable calculator if Error
             result = 'ERROR'
             setEnabled(false)
         }   
+
         setDisplayValue(result)
     }
 
